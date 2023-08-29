@@ -1,0 +1,61 @@
+html {
+  background-image: url(https://cdn.glitch.global/45d36f4f-a6aa-4004-93ae-f267ac11a128/atariPong.jpeg?v=1692764398307);
+  background-position: center;
+  background-size: 110%;
+  background-position-y: top;
+
+}
+html, body {
+    margin: 0;
+    padding: 0;
+  }
+  canvas {
+    display: block;
+    margin: auto;
+  }
+  p {
+    display: inline;
+    font-family: fantasy;
+    font-size: 30px;
+  }
+  
+
+  h2 {
+    display: inline;
+  }
+
+  .space {
+    width: 120px;
+  }
+
+#countdown {
+  width: 80%;
+  height: 60vh;
+    position: absolute;
+  background-color: black;
+  border: dashed 4px white;
+  border-radius: 14px;
+  animation: none;
+  display: none;
+}
+
+  #scores {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(to right, purple 0%, red 75%, orange 100%);
+
+  }
+
+
+@keyframes spin{
+  from {
+  transform: rotate(0deg);
+  }
+  to {
+  transform: rotate(360deg); 
+  }
+}
