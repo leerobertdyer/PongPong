@@ -1,3 +1,4 @@
+
 html {
   background-image: url(https://cdn.glitch.global/45d36f4f-a6aa-4004-93ae-f267ac11a128/atariPong.jpeg?v=1692764398307);
   background-position: center;
@@ -37,6 +38,13 @@ html, body {
   border-radius: 14px;
   animation: none;
   display: none;
+}
+
+#countdownVideo {
+  width: 80%;
+  height: 80%;
+  margin: 5% 5%;
+  border-radius: 12px;
 }
 
   #scores {
