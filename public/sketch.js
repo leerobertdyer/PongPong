@@ -17,15 +17,26 @@ let socket;
 const main = document.getElementById('main')
 console.log(window.innerWidth)
 console.log('here: ', main.style.width)
-let w = window.innerHeight * .75;
+let w = window.innerHeight * .85;
 let h = w * .75;
-
+let blocks = [];
 
 function setup() {
   createCanvas(w, h);
   ball = new Ball(30, 30, 20);
   p1 = new Paddle(w / 2, 5, 20, 80);
   p2 = new Paddle(w / 2, h - 25, 20, 80);
+  b1 = new Block(0, 0, 10, w / 5, 255, 255, 0);
+  b2 = new Block((1 / 5) * w, 0, 10, w / 5, 255, 100, 0);
+  b3 = new Block((2 / 5) * w, 0, 10, w / 5, 155, 77, 67);
+  b4 = new Block((3 / 5) * w, 0, 10, w / 5, 98, 244, 255);
+  b5 = new Block((4 / 5) * w, 0, 10, w / 5, 29, 199, 100);
+  b6 = new Block(0, h - 10, 10, w / 5, 255, 255, 0);
+  b7 = new Block((1 / 5) * w, h - 10, 10, w / 5, 255, 100, 0);
+  b8 = new Block((2 / 5) * w, h - 10, 10, w / 5, 155, 77, 67);
+  b9 = new Block((3 / 5) * w, h - 10, 10, w / 5, 98, 244, 255);
+  b10 = new Block((4 / 5) * w, h - 10, 10, w / 5, 0, 20, 88);
+  blocks.push(b1, b2, b3, b4, b5, b6, b7, b8, b9, b10);
   v = createVector(1, 1);
   socket = io.connect("http://localhost:3000");
 
@@ -46,6 +57,7 @@ function setup() {
       p2y: p2.y,
       p2h: p2.h,
       p2w: p2.w,
+      blocks: blocks,
     });
   });
   socket.on('gameId', function (data) {
@@ -69,6 +81,21 @@ function setup() {
     ball.pos.y = gameState.ball.pos.y;
     ball.vel.x = gameState.ball.vel.x;
     ball.vel.y = gameState.ball.vel.y;
+  });
+
+  socket.on("blocks", (blockUpdate) => {
+    const blockDataArray = blockUpdate;
+    blocks = blockDataArray.map((blockData) => {
+      return new Block(
+        blockData.x,
+        blockData.y,
+        blockData.h,
+        blockData.w,
+        blockData.r,
+        blockData.g,
+        blockData.b
+      );
+    });
   });
 
   socket.on("p1Scored", function (scores) {
@@ -96,6 +123,22 @@ function changeColor() {
   r = random(255);
   g = random(0);
   b = random(0);
+}
+
+class Block {
+  constructor(x, y, h, w, r, g, b) {
+    this.x = x;
+    this.y = y;
+    this.h = h;
+    this.w = w;
+    this.r = r;
+    this.g = g;
+    this.b = b;
+  }
+  draw() {
+    fill(this.r, this.g, this.b);
+    rect(this.x, this.y, this.w, this.h);
+  }
 }
 
 class Ball {
