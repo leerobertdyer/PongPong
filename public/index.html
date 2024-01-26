@@ -1,47 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"
-    />
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <script
-      src="https://cdn.socket.io/4.6.0/socket.io.min.js"
-      integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
-      crossorigin="anonymous"
-    ></script>
-    <meta charset="utf-8" />
-  </head>
 
-  <body class="tc">
-    <main id="main">
-      <h1 class="F1 bg-black white ma0 pa3" id="pong">Pong Pong</h1>
-      <div id="scores" class="mb4 pa2 bt bb bw4 b--white">
-        <div class="ma0">
-          <h2 class="F3 mb0">P1:</h2>
-          <p id="p1s"class="mb0">0</p>
-          <h2 class="F3 mb0">&nbsp&nbspP2:</h2>
-          <p id="p2s"class="mb0">0</p>
-        </div>
-        <div class="mt0">
-          <h3 class="ma0 pa0"id="gameId">
-            Game Id: 0
-          </h3>
-          <button
-            id="startButton"
-            class="grow pa2 mb2 mt2 ba bw1 b--white br3 w-40 bg-light-purple"
-          >
-            Start Game
-          </button>
-        </div>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+    integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+    crossorigin="anonymous"></script>
+  <meta charset="utf-8" />
+</head>
+
+<body class="tc">
+  <main id="main">
+    <h1 class="F1 bg-black white ma0 pa3" id="pong">Pong Pong</h1>
+    <div id="scores" class="mb4 pa2 bt bb bw4 b--white">
+      <div class="ma0">
+        <h2 class="F3 mb0">P1:</h2>
+        <p id="p1s" class="mb0">0</p>
+        <h2 class="F3 mb0">&nbsp&nbspP2:</h2>
+        <p id="p2s" class="mb0">0</p>
       </div>
-      <div class="flex justify-center align-center">
-        <div id="countdown"></div>
+
+    </div>
+    <div class="flex justify-center align-center">
+      <div class="mt0" style="display: flex; flex-direction: column; align-items: center">
+        <button id="startButton" class="startButton">
+          Start Game
+        </button>
+        <div id="waitingForOtherDiv" style="display: none">Waiting for second player to start...</div>
       </div>
-    </main>
-    <script src="sketch.js"></script>
-  </body>
+      <div id="countdown">
+        <img src="/public/Assets/3.png" id="countdown3">
+        <img src="/public/Assets/2.png" id="countdown2">
+        <img src="/public/Assets/1.png" id="countdown1">
+      </div>
+    </div>
+  </main>
+  <script src="sketch.js"></script>
+</body>
+
 </html>

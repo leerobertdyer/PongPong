@@ -103,16 +103,18 @@ io.sockets.on("connection", function (socket) {
       game.blocks = blocks;
       game.recentPaddlePositions.x = 200;
       game.recentPaddlePositions.y = 200;
-      game.players.forEach((playerId) => {
-        io.to(playerId).emit("gameId", { id: gameId });
-      });
       games.push(game);
 
       // Notify players that the game is ready to start (Start Counter)
       game.players.forEach((playerId) => {
         io.to(playerId).emit("gameReady");
       });
-      isGameReady = true;
+
+      socket.on("countdownOver", () => {
+        game.ball.vel.x = startVelX;
+        game.ball.vel.y = startVelY;
+        game.isGameReady = true;
+      });
     }
   });
 
@@ -163,8 +165,8 @@ setInterval(function () {
     if (!game.isGameReady) {
       return;
     }
-    if (!isIntervalRunning) {
-      isIntervalRunning = true;
+    if (!game.isIntervalRunning) {
+      game.isIntervalRunning = true;
 
       // Ball movement logic using the ball property of the game
       game.ball.pos.x += game.ball.vel.x;
@@ -205,6 +207,36 @@ setInterval(function () {
             io.to(playerId).emit("p2Scored", game.scores);
           });
         }
+      }
+
+      // Bounce off blocks and remove blocks
+      if (blocks.length > 0) {
+        for (let i = 0; i < game.blocks.length; i++) {
+          let currentBlock = game.blocks[i];
+          if (Math.sign(game.ball.vel.y) === 1 && currentBlock.y > h / 2) {
+            if (
+              game.ball.pos.y >= currentBlock.y &&
+              game.ball.pos.x >= currentBlock.x &&
+              game.ball.pos.x <= currentBlock.x + currentBlock.w
+            ) {
+              game.ball.vel.y *= -1;
+              game.blocks.splice(i, 1);
+            }
+          }
+          if (Math.sign(game.ball.vel.y) === -1 && currentBlock.y < h / 2) {
+            if (
+              game.ball.pos.y <= currentBlock.y + currentBlock.h &&
+              game.ball.pos.x >= currentBlock.x &&
+              game.ball.pos.x <= currentBlock.x + currentBlock.w
+            ) {
+              game.ball.vel.y *= -1;
+              game.blocks.splice(i, 1);
+            }
+          }
+        }
+        game.players.forEach((playerId) => {
+          io.to(playerId).emit("blocks", game.blocks);
+        });
       }
 
       // Bounce off paddles and speed up
@@ -254,8 +286,9 @@ setInterval(function () {
           }
         }
       }
-      isIntervalRunning = false;
+      game.isIntervalRunning = false;
     }
+
     // End of inner game loop logic.
     // Now we emit the status to each player:
 

@@ -26,23 +26,25 @@ function setup() {
   ball = new Ball(30, 30, 20);
   p1 = new Paddle(w / 2, 5, 20, 80);
   p2 = new Paddle(w / 2, h - 25, 20, 80);
-  b1 = new Block(0, 0, 10, w / 5, 255, 255, 0);
-  b2 = new Block((1 / 5) * w, 0, 10, w / 5, 255, 100, 0);
-  b3 = new Block((2 / 5) * w, 0, 10, w / 5, 155, 77, 67);
-  b4 = new Block((3 / 5) * w, 0, 10, w / 5, 98, 244, 255);
-  b5 = new Block((4 / 5) * w, 0, 10, w / 5, 29, 199, 100);
-  b6 = new Block(0, h - 10, 10, w / 5, 255, 255, 0);
-  b7 = new Block((1 / 5) * w, h - 10, 10, w / 5, 255, 100, 0);
-  b8 = new Block((2 / 5) * w, h - 10, 10, w / 5, 155, 77, 67);
-  b9 = new Block((3 / 5) * w, h - 10, 10, w / 5, 98, 244, 255);
-  b10 = new Block((4 / 5) * w, h - 10, 10, w / 5, 0, 20, 88);
+  b1 = new Block(0, 0, 20, w / 5, 255, 255, 0);
+  b2 = new Block((1 / 5) * w, 0, 20, w / 5, 255, 100, 0);
+  b3 = new Block((2 / 5) * w, 0, 20, w / 5, 155, 77, 67);
+  b4 = new Block((3 / 5) * w, 0, 20, w / 5, 98, 244, 255);
+  b5 = new Block((4 / 5) * w, 0, 20, w / 5, 29, 199, 100);
+  b6 = new Block(0, h - 20, 20, w / 5, 255, 255, 0);
+  b7 = new Block((1 / 5) * w, h - 20, 20, w / 5, 255, 100, 0);
+  b8 = new Block((2 / 5) * w, h - 20, 20, w / 5, 155, 77, 67);
+  b9 = new Block((3 / 5) * w, h - 20, 20, w / 5, 98, 244, 255);
+  b10 = new Block((4 / 5) * w, h - 20, 20, w / 5, 0, 20, 88);
   blocks.push(b1, b2, b3, b4, b5, b6, b7, b8, b9, b10);
   v = createVector(1, 1);
   socket = io.connect("http://localhost:3000");
 
   document.getElementById("startButton").addEventListener("click", () => {
-    socket.emit("playerReady");
     document.getElementById("startButton").disabled = true;
+    document.getElementById('waitingForOtherDiv').style.display="block"
+
+    socket.emit("playerReady");
   });
 
   socket.on("connect", function () {
@@ -60,10 +62,7 @@ function setup() {
       blocks: blocks,
     });
   });
-  socket.on('gameId', function (data) {
-    const gameId = data.id;
-    document.getElementById('gameId').innerHTML = `Game ID: ${gameId}`
-  });
+  
   socket.on("playerNumber", function (number) {
     playerNumber = number;
   });
@@ -112,6 +111,24 @@ function setup() {
     document.getElementById('p2s').innerHTML = scores.p2
     timer = millis();
     timerCheck = true;
+  });
+
+  socket.on("gameReady", () => {
+    document.getElementById('waitingForOtherDiv').style.display="none"    
+    document.getElementById("startButton").style.display = "none";
+    document.getElementById("countdown").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("countdown3").style.display = "none";
+        document.getElementById('countdown2').style.display = "block";
+      }, 1000)
+      setTimeout(() => {
+        document.getElementById('countdown2').style.display = "none";
+        document.getElementById('countdown1').style.display = "block";
+      }, 2000)
+      setTimeout(() => {
+        socket.emit('countdownOver')
+        document.getElementById('countdown1').style.display = "none";
+      }, 3000)  
   });
 
   socket.on("onePlayerDisconnect", () => {
@@ -211,6 +228,12 @@ function draw() {
     r = 255;
     g = 255;
     b = 255;
+  }
+
+  if (blocks.length > 0) {
+    for (const block of blocks) {
+      block.draw();
+    }
   }
 
   strokeWeight(15);

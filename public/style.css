@@ -29,13 +29,24 @@ html, body {
   }
 
 #countdown {
-  width: 80%;
+  width: 50%;
+  margin: 0 auto;
   height: 60vh;
     position: absolute;
-  background-color: black;
-  border: dashed 4px white;
-  border-radius: 14px;
   animation: none;
+  display: none;
+}
+
+#countdown1, #countdown2, #countdown3 {
+  margin: 0 auto;
+  width: 100%;
+}
+
+#countdown2 {
+  display: none;
+}
+
+#countdown1 {
   display: none;
 }
 
@@ -47,7 +58,27 @@ html, body {
     align-items: center;
     gap: 5px;
     background: linear-gradient(to right, purple 0%, red 75%, orange 100%);
+  }
 
+  .startButton {
+    width: 140px;
+    height: 33px;
+    border-radius: 6px;
+    border: solid coral 2px;
+    background-color: purple;
+    color: white;
+    margin-bottom: 25px;
+  }
+
+  .startButton:hover {
+    cursor: pointer;
+  }
+
+  #waitingForOtherDiv {
+    background-color: white;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
   }
 
 
