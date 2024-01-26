@@ -1,6 +1,6 @@
 ## Notes
 
-> Should still make a 'Waiting For Other Players' display._
+> Should still make a 'Waiting For Other Players' display...
 
 > could use the same timer for a pause button...
 
