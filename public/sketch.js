@@ -17,15 +17,9 @@ let socket;
 const main = document.getElementById('main')
 console.log(window.innerWidth)
 console.log('here: ', main.style.width)
-let w = window.innerWidth / 2;
-let h = w;
+let w = window.innerHeight * .75;
+let h = w * .75;
 
-window.addEventListener('resize', () => {
-  const newWidth = window.innerWidth / 2
- w = newWidth
- h = newWidth
-
-})
 
 function setup() {
   createCanvas(w, h);
@@ -33,7 +27,7 @@ function setup() {
   p1 = new Paddle(w / 2, 5, 20, 80);
   p2 = new Paddle(w / 2, h - 25, 20, 80);
   v = createVector(1, 1);
-  socket = io.connect("https://pongdong.glitch.me");
+  socket = io.connect("http://localhost:3000");
 
   document.getElementById("startButton").addEventListener("click", () => {
     socket.emit("playerReady");
@@ -169,7 +163,7 @@ function draw() {
   }
   if (millis() - timer > 400) {
     timerCheck = false;
-    document.getElementById("pong").innerHTML = "Pong Dong"; // Reset the message
+    document.getElementById("pong").innerHTML = "Pong Pong"; // Reset the message
     document.getElementById("pong").style.backgroundColor = "black"; // Reset the background color
     r = 255;
     g = 255;
