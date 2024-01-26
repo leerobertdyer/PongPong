@@ -5,6 +5,10 @@ app.use(express.static("public"));
 const socket = require("socket.io");
 const io = socket(server);
 
+
+
+/////////////////// ----------> INITIALIZATION <--------- /////////////////
+
 let games = [];
 let gameId = 0;
 let players = [];
@@ -38,6 +42,10 @@ class Game {
     };
   }
 }
+
+
+
+/////////////  ------------>   GAME LOGIC   <-------------  /////////////////
 
 io.sockets.on("connection", function (socket) {
   players.push(socket.id);
@@ -129,11 +137,11 @@ io.sockets.on("connection", function (socket) {
   });
 });
 
-// Main game loop
+///////////////////////     Main game loop    ///////////////////////
 
 setInterval(function () {
   if (!isGameReady) {
-    return; // Wait until both players are ready
+    return; 
   }
   games.forEach((game) => {
     if (!isIntervalRunning) {

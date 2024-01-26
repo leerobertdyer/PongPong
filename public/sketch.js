@@ -14,8 +14,18 @@ var g = 255;
 var b = 255;
 let playerNumber;
 let socket;
-let w = 400;
-let h = 400;
+const main = document.getElementById('main')
+console.log(window.innerWidth)
+console.log('here: ', main.style.width)
+let w = window.innerWidth / 2;
+let h = w;
+
+window.addEventListener('resize', () => {
+  const newWidth = window.innerWidth / 2
+ w = newWidth
+ h = newWidth
+
+})
 
 function setup() {
   createCanvas(w, h);
