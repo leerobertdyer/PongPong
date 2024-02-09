@@ -38,7 +38,11 @@ function setup() {
   b10 = new Block((4 / 5) * w, h - 20, 20, w / 5, 0, 20, 88);
   blocks.push(b1, b2, b3, b4, b5, b6, b7, b8, b9, b10);
   v = createVector(1, 1);
-  socket = io.connect("http://localhost:3000");
+  let url = window.location.href
+  if (!(url.includes("pongpong.glitch.me/"))) {
+    url = 'http://localhost:3000'
+  }
+  socket = io.connect(url);
 
   document.getElementById("startButton").addEventListener("click", () => {
     document.getElementById("startButton").disabled = true;

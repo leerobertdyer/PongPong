@@ -19,6 +19,9 @@ html, body {
     font-size: 30px;
   }
   
+  #pong {
+    margin-bottom: 130px;
+  }
 
   h2 {
     display: inline;
@@ -50,17 +53,29 @@ html, body {
   display: none;
 }
 
-  #scores {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    background: linear-gradient(to right, purple 0%, red 75%, orange 100%);
-  }
+.score {
+  background-color: olive;
+  border: solid gold 2px;
+  border-radius: 22px;
+  padding: 20px;
+}
+
+.player1 {
+  position: absolute;
+  top: 100px;
+  left: 20px;
+}
+
+.player2 {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+}
 
   .startButton {
+    position: absolute;
+    left: calc(50% - 70px);
+    top: calc(50vh - 17px);
     width: 140px;
     height: 33px;
     border-radius: 6px;
